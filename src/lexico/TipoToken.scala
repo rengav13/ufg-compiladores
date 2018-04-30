@@ -13,6 +13,7 @@ object TipoToken extends Enumeration {
   val ABRE_PARENTESES: TipoToken = new TipoToken("AB_P")
   val FECHA_PARENTESES: TipoToken = new TipoToken("FC_P")
   val PONTO_VIRGULA: TipoToken = new TipoToken("PT_V")
+  val WHITE_SPACE: TipoToken = new TipoToken("WHITE_SPACE")
   val ERRO: TipoToken = new TipoToken("ERRO")
 
   // Palavras reservadas

@@ -10,22 +10,25 @@ object ControladorAutomato {
     if (Automato.hasProximoEstado(this.estado, simbolo)) {
       this.estado = Automato.getProximoEstado(this.estado, simbolo)
       this.lexemaClassificado = false
-    }
-    else if (!EstadosFinais.isFinal(this.estado)) {
-      this.lexemaClassificado = true
-    }
-    else if (EstadosFinais.isFinal(this.estado)) {
+    } else {
       this.lexemaClassificado = true
     }
   }
 
   def getTipoToken: TipoToken.TipoToken = {
     if (!EstadosFinais.isFinal(this.estado)) {
-      this.estado = 0
+      this.reiniciarEstadoAutomato()
       TipoToken.ERRO
+    } else {
+      val estadoAnterior = this.reiniciarEstadoAutomato()
+      EstadosFinais.getTipoToken(estadoAnterior)
     }
-    val tipoToken = EstadosFinais.getTipoToken(this.estado)
+  }
+
+  private def reiniciarEstadoAutomato(): Int = {
+    val estadoAnterior = this.estado
     this.estado = 0
-    tipoToken
+    this.lexemaClassificado = false
+    estadoAnterior
   }
 }
