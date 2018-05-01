@@ -10,7 +10,7 @@ object App {
     while (true) {                      
       Console.readLine match          //Enquanto estiver lendo o arquivo
       {
-        case "quit" => System.exit(0)  //quit para a execução do programa
+        case "quit" => System.exit(0)  //quit para sair 
         case _ => println(lexico.proximoToken())
       }
     }
