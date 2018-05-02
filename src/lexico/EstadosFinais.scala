@@ -11,6 +11,8 @@ object EstadosFinais {
     8 -> TipoToken.OPERADOR_ARITMETICO,
     9 -> TipoToken.IDENTIFICADOR,
     11 -> TipoToken.LITERAL,
+    12 -> TipoToken.LITERAL,
+    14 -> TipoToken.COMENTARIO,
     15 -> TipoToken.COMENTARIO,
     16 -> TipoToken.FIM_ARQUIVO,
     17 -> TipoToken.OPERADOR_RELACIONAL,
@@ -20,7 +22,8 @@ object EstadosFinais {
     21 -> TipoToken.ATRIBUICAO,
     22 -> TipoToken.ABRE_PARENTESES,
     23 -> TipoToken.FECHA_PARENTESES,
-    24 -> TipoToken.PONTO_VIRGULA
+    24 -> TipoToken.PONTO_VIRGULA,
+    25 -> TipoToken.WHITE_SPACE
   )
 
   def isFinal(estado: Int): Boolean = this.ESTADOS_FINAIS.contains(estado)
