@@ -1,5 +1,14 @@
 package lexico
 
+
+/*
+ * Significados dos simbolos:
+ *  D: Digito [0-9]
+ *  L: Letra  [a-zA-Z]
+ *  F: Whitespace. Ex.: \n \r \t ' ' e etc...
+ *  EOF: Fim de arquivo
+ *  Q: Qualquer caracter
+ */
 object Automato {
   val TRASICOES: Map[Int, Map[String, Int]] =
     Map(
@@ -49,7 +58,7 @@ object Automato {
         "}" -> 11,
         "(" -> 11,
         ")" -> 11,
-        ":" -> 11
+        "Q" -> 11
       ),
       11 -> Map(
         "D" -> 11,
@@ -69,7 +78,7 @@ object Automato {
         "}" -> 11,
         "(" -> 11,
         ")" -> 11,
-        ":" -> 11),
+        "Q" -> 11),
       12 -> Map(),
       13 -> Map(
         "D" -> 14,
@@ -89,7 +98,7 @@ object Automato {
         "}" -> 15,
         "(" -> 14,
         ")" -> 14,
-        ":" -> 14
+        "Q" -> 14
       ),
       14 -> Map(
         "D" -> 11,
@@ -109,7 +118,7 @@ object Automato {
         "}" -> 15,
         "(" -> 11,
         ")" -> 11,
-        ":" -> 11
+        "Q" -> 11
       ),
       15 -> Map(),
       16 -> Map(),
@@ -127,4 +136,6 @@ object Automato {
   def hasProximoEstado(estado: Int, entrada: String): Boolean = this.TRASICOES(estado).contains(entrada)
 
   def getProximoEstado(estado: Int, entrada: String): Int = this.TRASICOES(estado)(entrada)
+
+  def isSimbolo(char: Char): Boolean = Seq("D", "L", "F", "<", ">", "=", "E", "+", "-", "*", "/", ";", "\"", "{", "}", "(", ")", ".", "Q").contains(char.toString)
 }

@@ -7,7 +7,8 @@ object App {
     while (true) {
       Console.readLine match {
         case "quit" => System.exit(0)
-        case _ => println(lexico.proximoToken())
+        case _ if lexico.hasProximoToken => println(lexico.proximoToken())
+        case _ => print("Código fonte finalizado")
       }
     }
   }
