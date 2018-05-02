@@ -11,6 +11,7 @@ object App {
         case _ =>
           print("Código fonte finalizado")
           TabelaSimbolos.imprimir()
+          System.exit(0)
       }
     }
   }

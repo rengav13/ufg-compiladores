@@ -7,9 +7,6 @@ class Token(var tipoToken: TipoToken, var lexema: String) {
         case TipoToken.IDENTIFICADOR =>
             if (TipoToken.isPalavraReservada(lexema))
                 this.tipoToken = TipoToken.getPalavraReservada(lexema)
-        case TipoToken.COMENTARIO =>
-            this.tipoToken = null
-            this.lexema = null
         case _ =>
     }
 

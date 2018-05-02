@@ -1,3 +1,4 @@
+321312312aj+122sdghsda
 inicio     
 	varinicio         
 		A literal;         
@@ -6,7 +7,7 @@ inicio
 		C real;     
 	varfim; 
  
-	escreva "Digite B";     
+	escreva "Digite B";
 	leia B;     
 	escreva "Digite A:";     
 	leia A;     

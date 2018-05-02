@@ -25,7 +25,6 @@ class AnalisadorLexico(fonte: String) {
     var simbolo: String = ""
     var lexema: String = ""
 
-    // percorendo o caractere do arquivo transitando entre os estados do automato até a classificaçao do lexema
     while (!ControladorAutomato.isLexemaClassificado && arquivo.hasNext) {
       char = this.charTemporario.getOrElse(arquivo.next)
       simbolo = this.toSimbolo(char)
@@ -40,34 +39,23 @@ class AnalisadorLexico(fonte: String) {
         this.charTemporario = Some(char)
     }
 
-
-
     if (!arquivo.hasNext) {
       this.finalizouVarredura = true
       obtemToken(TipoToken.FIM_ARQUIVO, "EOF").orNull
     } else {
-      val tipoToken: TipoToken = ControladorAutomato.getTipoToken
-
-      if (TipoToken.IDENTIFICADOR.equals(tipoToken)) {
-        TabelaSimbolos.inserir(obtemToken(tipoToken, lexema).orNull)
-      } else {
-        obtemToken(tipoToken, lexema).orNull
-      }
+      TabelaSimbolos.inserir(obtemToken(ControladorAutomato.getTipoToken, lexema).orNull)
     }
   }
 
   def obtemToken(tipoToken: TipoToken, lexema: String): Option[Token] = {
     tipoToken match {
-      case TipoToken.ERRO =>
-        println(s"Foi encontrado um erro na linha ${this.linha} e na coluna ${this.coluna}")
-        None
-      case TipoToken.COMENTARIO => None
-      case TipoToken.WHITE_SPACE => None
+      case TipoToken.ERRO => throw new Exception(s"Foi encontrado um erro na linha ${this.linha} e na coluna ${this.coluna}")
+      case TipoToken.COMENTARIO => Some(proximoToken())
+      case TipoToken.WHITE_SPACE => Some(proximoToken())
       case _ => Some(new Token(tipoToken, lexema))
     }
   }
 
-  //Função para categorizar o tipo de caracter lido associando eles a um simbolo
   def toSimbolo(char: Char): String = {
     char match {
       case _ if Character.isDigit(char) => "D"
