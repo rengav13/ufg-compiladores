@@ -19,32 +19,41 @@ class AnalisadorLexico(fonte: String) {
 
   def hasProximoToken: Boolean = !this.finalizouVarredura
 
-  //
+  // Percorendo caractere por caractere do arquivo identifica e retorna se tiver o token.
   def proximoToken(): Token = {
     var char: Char = 0
     var simbolo: String = ""
     var lexema: String = ""
 
-    //Enquanto o lexema não for classificado
+    // percorendo o caractere do arquivo transitando entre os estados do automato até a classificaçao do lexema
     while (!ControladorAutomato.isLexemaClassificado && arquivo.hasNext) {
-      char = this.charTemporario.getOrElse(arquivo.next)    //Lendo por caracteres de cada Token TODO Char por char do arquivo e não do token.
-      simbolo = this.toSimbolo(char)                        //Passando o simbolo definido para o tipo de caracter lido TODO Converte char para simbolo interpretavel pelo automato
+      char = this.charTemporario.getOrElse(arquivo.next)
+      simbolo = this.toSimbolo(char)
       this.charTemporario = None
 
-      ControladorAutomato.vaiParaProximoEstado(simbolo)     //Com o simbolo o controladorAutomato nos passa o próximo estado do Automato
+      ControladorAutomato.vaiParaProximoEstado(simbolo)
 
       if (!ControladorAutomato.isLexemaClassificado) {
-        lexema += char.toString                             //lexema recebe a string dos caracteres lidos
-        this.atualizaPosicaoDoCursor(char)                  //Ir para a próxima posição TODO: Atualiza posição da linha e da coluna no arquivo
+        lexema += char.toString
+        this.atualizaPosicaoDoCursor(char)
       } else
         this.charTemporario = Some(char)
     }
 
+
+
     if (!arquivo.hasNext) {
       this.finalizouVarredura = true
       obtemToken(TipoToken.FIM_ARQUIVO, "EOF").orNull
-    } else
-      obtemToken(ControladorAutomato.getTipoToken, lexema).orNull
+    } else {
+      val tipoToken: TipoToken = ControladorAutomato.getTipoToken
+
+      if (TipoToken.IDENTIFICADOR.equals(tipoToken)) {
+        TabelaSimbolos.inserir(obtemToken(tipoToken, lexema).orNull)
+      } else {
+        obtemToken(tipoToken, lexema).orNull
+      }
+    }
   }
 
   def obtemToken(tipoToken: TipoToken, lexema: String): Option[Token] = {

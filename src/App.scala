@@ -1,4 +1,4 @@
-import lexico.AnalisadorLexico
+import lexico.{AnalisadorLexico, TabelaSimbolos}
 
 object App {
   def main(args: Array[String]) {
@@ -8,7 +8,9 @@ object App {
       Console.readLine match {
         case "quit" => System.exit(0)
         case _ if lexico.hasProximoToken => println(lexico.proximoToken())
-        case _ => print("Código fonte finalizado")
+        case _ =>
+          print("Código fonte finalizado")
+          TabelaSimbolos.imprimir()
       }
     }
   }
