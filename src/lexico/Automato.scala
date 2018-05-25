@@ -4,6 +4,7 @@ package lexico
 /*
  * Significados dos simbolos:
  *  D: Digito [0-9]
+ *  E: Letra ou parte da notação cientifica de um número.
  *  L: Letra  [a-zA-Z]
  *  F: Whitespace. Ex.: \n \r \t ' ' e etc...
  *  EOF: Fim de arquivo
@@ -31,7 +32,7 @@ object Automato {
         "(" -> 22,
         ")" -> 23
       ),
-      1 -> Map("D" -> 2),
+      1 -> Map(),
       2 -> Map("D" -> 2, "E" -> 5, "." -> 3),
       3 -> Map("D" -> 4),
       4 -> Map("D" -> 4, "E" -> 5),
@@ -39,7 +40,7 @@ object Automato {
       6 -> Map("D" -> 7),
       7 -> Map("D" -> 7),
       8 -> Map(),
-      9 -> Map("D" -> 9, "L" -> 9, "-" -> 9),
+      9 -> Map("D" -> 9, "L" -> 9, "-" -> 9, "E" -> 9),
       10 -> Map(
         "D" -> 11,
         "L" -> 11,
@@ -133,90 +134,9 @@ object Automato {
       25 -> Map("F" -> 25)
     )
 
-  def hasProximoEstado(estado: Int, entrada: String): Boolean = this.TRASICOES(estado).contains(entrada)
+  def existeProximoEstado(estado: Int, entrada: String): Boolean = this.TRASICOES(estado).contains(entrada)
 
-  def getProximoEstado(estado: Int, entrada: String): Int = this.TRASICOES(estado)(entrada)
+  def pegarProximoEstado(estado: Int, entrada: String): Int = this.TRASICOES(estado)(entrada)
 
   def isSimbolo(char: Char): Boolean = Seq("D", "L", "F", "<", ">", "=", "E", "+", "-", "*", "/", ";", "\"", "{", "}", "(", ")", ".", "Q").contains(char.toString)
 }
-
-
-
-/*
-val TRASICOES: Map[Int, Map[String, Int]] =
-    Map(
-      0 -> Map(
-        "D" -> 1,
-        "L" -> 9,
-        '"' -> 7,
-        "<" -> 13,
-        ">" -> 17,
-        "=" -> 19,
-        "+" -> 20,
-        "*" -> 22,
-        "/" -> 23,
-        ";" -> 12,
-        "EOF" -> 11,
-        "{" -> 10,
-        "(" -> 24,
-        ")" -> 25,
-      ),
-      1 -> Map(
-        "D" -> 1,
-        "." -> 2,
-        "E" -> 4
-      ),
-      2 -> Map("D" -> 3),
-      3 -> Map(
-        "D" -> 3,
-        "E"-> 4
-      ),
-      4 -> Map(
-        "D" -> 6,
-        "-" -> 5,
-        "+" -> 5
-      ),
-      5 -> Map("D" -> 6),
-      6 -> Map("D" -> 6),
-      7 -> Map('"' -> 8),
-      8 -> Map(),
-      9 -> Map(
-        "D" -> 9,
-        "L" -> 9,
-        "-" -> 9
-      ),
-      10 -> Map("D" -> 10,
-        "L" -> 10,
-        "}"-> 0, "<" -> 10,
-        ">" -> 10,
-        "=" -> 10,
-        "E" -> 10,
-        "+" -> 10,
-        "-" -> 10,
-        "*" -> 10,
-        "/" -> 10,
-        ";" -> 10,
-        "{" -> 10,
-        "(" -> 10,
-        ")" -> 10),
-      11 -> Map(),
-      12 -> Map(),
-      13 -> Map("-" -> 14,
-        "=" -> 16,
-        ">" -> 15
-      ),
-      14 -> Map(),
-      15 -> Map(),
-      16 -> Map(),
-      17 -> Map("=" -> 18),
-      18 -> Map(),
-      19 -> Map(),
-      20 -> Map(),
-      21 -> Map(),
-      22 -> Map(),
-      23 -> Map(),
-      24 -> Map(),
-      25 -> Map(),
-    )
-
- */

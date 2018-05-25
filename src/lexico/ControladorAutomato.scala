@@ -4,11 +4,11 @@ object ControladorAutomato {
   private var estado: Int = 0
   private var lexemaClassificado: Boolean = false
 
-  def isLexemaClassificado: Boolean = this.lexemaClassificado
+  def lexemaNaoFoiClassificado: Boolean = !this.lexemaClassificado
 
-  def vaiParaProximoEstado(simbolo: String): Unit = {
-    if (Automato.hasProximoEstado(this.estado, simbolo)) {
-      this.estado = Automato.getProximoEstado(this.estado, simbolo)
+  def irParaProximoEstado(simbolo: String): Unit = {
+    if (Automato.existeProximoEstado(this.estado, simbolo)) {
+      this.estado = Automato.pegarProximoEstado(this.estado, simbolo)
       this.lexemaClassificado = false
     } else {
       this.lexemaClassificado = true
@@ -16,19 +16,18 @@ object ControladorAutomato {
   }
 
   def getTipoToken: TipoToken.TipoToken = {
-    if (!EstadosFinais.isFinal(this.estado)) {
-      this.reiniciarEstadoAutomato()
-      TipoToken.ERRO
-    } else {
-      val estadoAnterior = this.reiniciarEstadoAutomato()
+    val estadoAnterior: Int = this.reiniciar()
+    if (EstadosFinais.classificou(estadoAnterior))
       EstadosFinais.getTipoToken(estadoAnterior)
-    }
+    else
+      throw new Exception(ErrosPorEstado.pegarErro(estadoAnterior))
   }
 
-  private def reiniciarEstadoAutomato(): Int = {
+  private def reiniciar(): Int = {
     val estadoAnterior = this.estado
     this.estado = 0
     this.lexemaClassificado = false
     estadoAnterior
   }
 }
+

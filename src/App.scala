@@ -6,6 +6,7 @@ import lexico.{AnalisadorLexico, TabelaSimbolos}
   *   Christian Kalombo Mudiany     #200904787
   */
 object App {
+
   def main(args: Array[String]) {
     println("Digite o caminho do cÓdigo fonte ...")
     val lexico = new AnalisadorLexico(Console.readLine())
@@ -15,9 +16,9 @@ object App {
     while (true) {
       Console.readLine match {
         case "quit" => System.exit(0)
-        case _ if lexico.hasProximoToken => println(lexico.proximoToken())
+        case _ if !lexico.leituraFinalizada => println(lexico.proximoToken())
         case _ =>
-          print("Código fonte finalizado")
+          println("Código fonte finalizado")
           TabelaSimbolos.imprimir()
           System.exit(0)
       }

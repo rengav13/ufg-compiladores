@@ -26,7 +26,7 @@ object EstadosFinais {
     25 -> TipoToken.WHITE_SPACE
   )
 
-  def isFinal(estado: Int): Boolean = this.ESTADOS_FINAIS.contains(estado)
+  def classificou(estado: Int): Boolean = this.ESTADOS_FINAIS.contains(estado)
 
   def getTipoToken(estado: Int): TipoToken = this.ESTADOS_FINAIS(estado)
 }

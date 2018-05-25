@@ -20,10 +20,9 @@ object TabelaSimbolos {
     "real" -> new Token(TipoToken.REAL, "real")
   )
 
-  def inserir(token: Token): Token = {
+  def inserir(token: Token): Unit = {
     if (token != null)
       this.TABELA += (token.lexema -> token)
-    token
   }
 
   def imprimir(): Unit = println(this.TABELA)
