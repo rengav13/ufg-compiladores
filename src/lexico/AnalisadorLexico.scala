@@ -10,6 +10,10 @@ import scala.io.{BufferedSource, Source}
  *  - Não está tratando números em notação cientifica.
  *  - Não está identificando ERRO: 2A -> NUMERO: 2 e ID: A
  */
+// MOSTRAR CAUSA DO ERRO
+// APENAS IDENTIFICADORES NA TABELA DE SIMBOLOS
+// TRATAR ERRO COM NÚMEROS CIENTIFICOS
+
 class AnalisadorLexico(fonte: String) {
   val arquivo: BufferedSource = Source.fromFile(fonte)
   var charTemporario: Option[Char] = None
@@ -19,7 +23,6 @@ class AnalisadorLexico(fonte: String) {
 
   def hasProximoToken: Boolean = !this.finalizouVarredura
 
-  // Percorendo caractere por caractere do arquivo identifica e retorna se tiver o token.
   def proximoToken(): Token = {
     var char: Char = 0
     var simbolo: String = ""
