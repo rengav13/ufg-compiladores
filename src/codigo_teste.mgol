@@ -1,5 +1,5 @@
 inicio     
-	@varinicio
+	varinicio
 		A literal;
 		B inteiro;         
 		D inteiro;         

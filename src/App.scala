@@ -1,27 +1,15 @@
-import lexico.{AnalisadorLexico, TabelaSimbolos}
+import sintatico.AnalisadorSintatico
 
 /**
   * Desenvolvedores:
-  *   Vagner Luciano da Costa Silva #201403469
-  *   Christian Kalombo Mudiany     #200904787
+  * Vagner Luciano da Costa Silva #201403469
+  * Christian Kalombo Mudiany     #200904787
   */
 object App {
 
   def main(args: Array[String]) {
     println("Digite o caminho do cÓdigo fonte ...")
-    val lexico = new AnalisadorLexico(Console.readLine())
-    println("Arquivo carregado com sucesso!")
-    println()
-    println("Digite enter para identificar o proximo caracter")
-    while (true) {
-      Console.readLine match {
-        case "quit" => System.exit(0)
-        case _ if !lexico.leituraFinalizada => println(lexico.proximoToken())
-        case _ =>
-          println("Código fonte finalizado")
-          TabelaSimbolos.imprimir()
-          System.exit(0)
-      }
-    }
+
+    new AnalisadorSintatico(Console.readLine()).analisar()
   }
 }
