@@ -29,6 +29,6 @@ inicio
 	escreva "\n";     
 	escreva C;    
 	escreva "\n";    
-	escreva A; 
-	
+	escreva A;
+
 fim

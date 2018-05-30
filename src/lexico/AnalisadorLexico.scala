@@ -16,10 +16,15 @@ class AnalisadorLexico(fonte: String) {
     classificarToken(entrada)
 
     if (leituraFinalizada) {
-      new Token(TipoToken.FIM_ARQUIVO, "EOF")
+      return new Token(TipoToken.FIM_ARQUIVO, "EOF")
     }
 
-    criarToken(entrada)
+    val tipoToken: TipoToken = ControladorAutomato.getTipoToken
+    if (TipoToken.WHITE_SPACE.equals(tipoToken)) {
+      return proximoToken()
+    }
+
+    criarToken(entrada, tipoToken)
   }
 
   def classificarToken(entrada: Entrada): Unit = {
@@ -38,9 +43,8 @@ class AnalisadorLexico(fonte: String) {
     }
   }
 
-  def criarToken(entrada: Entrada): Token = {
+  def criarToken(entrada: Entrada, tipoToken: TipoToken): Token = {
     try {
-      val tipoToken: TipoToken = ControladorAutomato.getTipoToken
       if (IDENTIFICADOR.equals(tipoToken)) {
         TabelaSimbolos.inserir(new Token(tipoToken, entrada.lexema))
       }

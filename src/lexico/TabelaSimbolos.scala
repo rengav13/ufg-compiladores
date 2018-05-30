@@ -12,7 +12,6 @@ object TabelaSimbolos {
     "leia" -> new Token(TipoToken.LEIA, "leia"),
     "se" -> new Token(TipoToken.SE, "se"),
     "entao" -> new Token(TipoToken.ENTAO, "entao"),
-    "senao" -> new Token(TipoToken.SENAO, "senao"),
     "fimse" -> new Token(TipoToken.FIM_SE, "fimse"),
     "fim" -> new Token(TipoToken.FIM, "fim"),
     "Inteiro" -> new Token(TipoToken.INTEIRO, "Inteiro"),

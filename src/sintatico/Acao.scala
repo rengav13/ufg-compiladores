@@ -13,4 +13,6 @@ class Acao(tipo: String, valor: Int) {
   def isEmpilhar: Boolean = EMPILHAR.equals(tipo)
 
   def isAceitar: Boolean = ACEITAR.equals(tipo)
+
+  override def toString: String = s"[${this.tipo} ${this.valor}]"
 }

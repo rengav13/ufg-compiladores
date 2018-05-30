@@ -13,14 +13,8 @@ import lexico.TipoToken.TipoToken
  */
 object Automato {
 
-  val TRASICOES_TERMINAIS: Map[Int, Map[TipoToken, Acao]] = Map(
-
-  )
-
-  val TRASICOES_NAO_TERMINAIS: Map[Int, Map[String, Int]] = Map(
-
-
-  )
+  val TRASICOES_TERMINAIS: Map[Int, Map[TipoToken, Acao]] = new MontadorTabela().montarTabelaTerminais()
+  val TRASICOES_NAO_TERMINAIS: Map[Int, Map[String, Int]] = new MontadorTabela().montarTabelaNaoTerminais()
 
   def obterAcao(estado: Int, token: TipoToken): Acao = this.TRASICOES_TERMINAIS(estado)(token)
 

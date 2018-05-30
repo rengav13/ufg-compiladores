@@ -11,8 +11,9 @@ class AnalisadorSintatico(fonte: String) {
   def analisar(): Unit = {
     this.inicializar(fonte)
 
-    while (!this.lexico.leituraFinalizada) {
-      val acao: Acao = Automato.obterAcao(this.pilha.estado(), this.token.tipoToken)
+    var acao: Acao = null
+    do {
+      acao = Automato.obterAcao(this.pilha.estado(), this.token.tipoToken)
 
       acao match {
         case _ if acao.isEmpilhar => empilhar(acao.getValor)
@@ -20,7 +21,7 @@ class AnalisadorSintatico(fonte: String) {
         case _ if acao.isAceitar => aceitar()
         case _ => throw new Exception("Erro sintático: Não foi possível fazer a análise!")
       }
-    }
+    } while (!acao.isAceitar)
   }
 
   def empilhar(estado: Int): Unit = {
@@ -44,7 +45,7 @@ class AnalisadorSintatico(fonte: String) {
   }
 
   def inicializar(fonte: String): Unit = {
-    assert(lexico.leituraFinalizada, "O arquivo está vázio")
+    assert(!lexico.leituraFinalizada, "O arquivo está vázio")
     this.token = this.lexico.proximoToken()
   }
 }

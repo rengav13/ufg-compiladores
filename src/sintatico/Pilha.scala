@@ -25,4 +25,5 @@ class Pilha {
     this.estados.top
   }
 
+  override def toString: String = s"${this.tokens} ${this.estados}"
 }
