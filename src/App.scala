@@ -1,4 +1,4 @@
-import sintatico.{AnalisadorSintatico, Mensagens}
+import sintatico.AnalisadorSintatico
 
 /**
   * Desenvolvedores:
@@ -8,7 +8,7 @@ import sintatico.{AnalisadorSintatico, Mensagens}
 object App {
 
   def main(args: Array[String]) {
-    println("Digite o caminho do cÓdigo fonte ...")
+    println("Digite o caminho do código fonte ...")
 
     //new AnalisadorSintatico(Console.readLine()).analisar()
     new AnalisadorSintatico("D:\\Universidade\\9_semestre\\Compiladores\\Projeto\\ufg-compiladores\\compilador\\src\\codigo_teste.mgol").analisar()
