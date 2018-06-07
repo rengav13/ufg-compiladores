@@ -55,6 +55,7 @@ class MontadorTabela {
       case _ if in.startsWith("S") => new Acao(in.substring(0, 1), in.substring(1, in.length).toInt)
       case _ if in.startsWith("R") => new Acao(in.substring(0, 1), in.substring(1, in.length).toInt)
       case _ if in.startsWith("ACC") => new Acao(in.substring(0, 3))
+      case _ if in.startsWith("ET") => new Acao(in.substring(0, 2), in.substring(2, in.length).toInt)
       case _ => throw new Exception("Por favor verifique as informações da tabela de símbolos terminais: " + in)
     }
   }

@@ -54,4 +54,5 @@ class AnalisadorLexico(fonte: String) {
     }
   }
 
+  def getCursor: Cursor = this.cursor
 }

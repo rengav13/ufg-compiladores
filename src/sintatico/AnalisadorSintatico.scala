@@ -19,7 +19,8 @@ class AnalisadorSintatico(fonte: String) {
         case _ if acao.isEmpilhar => empilhar(acao.getValor)
         case _ if acao.isReduzir => reduzir(acao.getValor)
         case _ if acao.isAceitar => aceitar()
-        case _ => throw new Exception("Erro sintático: Não foi possível fazer a análise!")
+        case _ if acao.isErro => throw new Exception(s"Erro sintático: ${Mensagens.get(acao.getValor)}: linha ${this.lexico.getCursor.linha} e coluna ${this.lexico.getCursor.coluna}")
+        case _ => throw new Exception(s"Erro sintático: Erro desconhecido: linha ${this.lexico.getCursor.linha} e coluna ${this.lexico.getCursor.coluna}")
       }
     } while (!acao.isAceitar)
   }

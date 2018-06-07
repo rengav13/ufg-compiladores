@@ -1,6 +1,6 @@
 package sintatico
 
-import sintatico.TipoAcao.{ACEITAR, EMPILHAR, REDUZIR}
+import sintatico.TipoAcao.{ACEITAR, EMPILHAR, ERRO, REDUZIR}
 
 class Acao(tipo: String, valor: Int) {
 
@@ -13,6 +13,8 @@ class Acao(tipo: String, valor: Int) {
   def isEmpilhar: Boolean = EMPILHAR.equals(tipo)
 
   def isAceitar: Boolean = ACEITAR.equals(tipo)
+
+  def isErro: Boolean = ERRO.equals(tipo)
 
   override def toString: String = s"[${this.tipo} ${this.valor}]"
 }
