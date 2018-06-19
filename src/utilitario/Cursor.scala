@@ -1,4 +1,4 @@
-package lexico
+package utilitario
 
 class Cursor {
   var linha: Int = 1

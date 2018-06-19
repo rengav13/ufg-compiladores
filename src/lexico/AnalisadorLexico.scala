@@ -1,6 +1,7 @@
 package lexico
 
-import lexico.TipoToken.{IDENTIFICADOR, TipoToken}
+import lexico.TipoSimbolo.{FIM_ARQUIVO, IDENTIFICADOR, WHITE_SPACE}
+import utilitario.Cursor
 
 import scala.io.{BufferedSource, Source}
 
@@ -11,18 +12,23 @@ class AnalisadorLexico(fonte: String) {
 
   def leituraFinalizada: Boolean = !arquivo.hasNext
 
-  def proximoToken(): Token = {
+  def proximoSimbolo(): Simbolo = {
     var entrada: Entrada = new Entrada()
-    classificarToken(entrada)
+    classificarSimbolo(entrada)
 
     if (leituraFinalizada) {
-      new Token(TipoToken.FIM_ARQUIVO, "EOF")
+      return new Simbolo(FIM_ARQUIVO, "EOF")
     }
 
-    criarToken(entrada)
+    val tipoSimbolo: String = ControladorAutomato.getTipoSimbolo
+    if (WHITE_SPACE.equals(tipoSimbolo)) {
+      return proximoSimbolo()
+    }
+
+    criarSimbolo(entrada, tipoSimbolo)
   }
 
-  def classificarToken(entrada: Entrada): Unit = {
+  def classificarSimbolo(entrada: Entrada): Unit = {
     while (ControladorAutomato.lexemaNaoFoiClassificado && arquivo.hasNext) {
       entrada.caracter(this.lookAhead.getOrElse(arquivo.next))
       this.lookAhead = None
@@ -38,16 +44,16 @@ class AnalisadorLexico(fonte: String) {
     }
   }
 
-  def criarToken(entrada: Entrada): Token = {
+  def criarSimbolo(entrada: Entrada, tipoSimbolo: String): Simbolo = {
     try {
-      val tipoToken: TipoToken = ControladorAutomato.getTipoToken
-      if (IDENTIFICADOR.equals(tipoToken)) {
-        TabelaSimbolos.inserir(new Token(tipoToken, entrada.lexema))
+      if (IDENTIFICADOR.equals(tipoSimbolo)) {
+        TabelaSimbolos.inserir(new Simbolo(tipoSimbolo, entrada.lexema))
       }
-      new Token(tipoToken, entrada.lexema)
+      new Simbolo(tipoSimbolo, entrada.lexema)
     } catch {
       case e: Exception => throw new Exception(s"Erro identificado na linha ${this.cursor.linha} e na coluna ${this.cursor.coluna} : ${e.getMessage}")
     }
   }
 
+  def getCursor: Cursor = this.cursor
 }
