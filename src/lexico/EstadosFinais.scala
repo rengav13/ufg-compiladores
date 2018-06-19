@@ -1,32 +1,30 @@
 package lexico
 
-import lexico.TipoToken.TipoToken
-
 object EstadosFinais {
-  val ESTADOS_FINAIS: Map[Int, TipoToken.TipoToken] = Map(
-    1 -> TipoToken.OPERADOR_ARITMETICO,
-    2 -> TipoToken.NUMERO,
-    4 -> TipoToken.NUMERO,
-    7 -> TipoToken.NUMERO,
-    8 -> TipoToken.OPERADOR_ARITMETICO,
-    9 -> TipoToken.IDENTIFICADOR,
-    11 -> TipoToken.CONSTANTE_LITERAL,
-    12 -> TipoToken.CONSTANTE_LITERAL,
-    14 -> TipoToken.COMENTARIO,
-    15 -> TipoToken.COMENTARIO,
-    16 -> TipoToken.FIM_ARQUIVO,
-    17 -> TipoToken.OPERADOR_RELACIONAL,
-    18 -> TipoToken.OPERADOR_RELACIONAL,
-    19 -> TipoToken.OPERADOR_RELACIONAL,
-    20 -> TipoToken.OPERADOR_RELACIONAL,
-    21 -> TipoToken.ATRIBUICAO,
-    22 -> TipoToken.ABRE_PARENTESES,
-    23 -> TipoToken.FECHA_PARENTESES,
-    24 -> TipoToken.PONTO_VIRGULA,
-    25 -> TipoToken.WHITE_SPACE
+  val ESTADOS_FINAIS: Map[Int, String] = Map(
+    1 -> TipoSimbolo.OPERADOR_ARITMETICO,
+    2 -> TipoSimbolo.NUMERO,
+    4 -> TipoSimbolo.NUMERO,
+    7 -> TipoSimbolo.NUMERO,
+    8 -> TipoSimbolo.OPERADOR_ARITMETICO,
+    9 -> TipoSimbolo.IDENTIFICADOR,
+    11 -> TipoSimbolo.CONSTANTE_LITERAL,
+    12 -> TipoSimbolo.CONSTANTE_LITERAL,
+    14 -> TipoSimbolo.COMENTARIO,
+    15 -> TipoSimbolo.COMENTARIO,
+    16 -> TipoSimbolo.FIM_ARQUIVO,
+    17 -> TipoSimbolo.OPERADOR_RELACIONAL,
+    18 -> TipoSimbolo.OPERADOR_RELACIONAL,
+    19 -> TipoSimbolo.OPERADOR_RELACIONAL,
+    20 -> TipoSimbolo.OPERADOR_RELACIONAL,
+    21 -> TipoSimbolo.ATRIBUICAO,
+    22 -> TipoSimbolo.ABRE_PARENTESES,
+    23 -> TipoSimbolo.FECHA_PARENTESES,
+    24 -> TipoSimbolo.PONTO_VIRGULA,
+    25 -> TipoSimbolo.WHITE_SPACE
   )
 
   def classificou(estado: Int): Boolean = this.ESTADOS_FINAIS.contains(estado)
 
-  def getTipoToken(estado: Int): TipoToken = this.ESTADOS_FINAIS(estado)
+  def getTipoSimbolo(estado: Int): String = this.ESTADOS_FINAIS(estado)
 }

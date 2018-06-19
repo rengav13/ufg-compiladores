@@ -4,7 +4,6 @@ inicio
 		B inteiro;         
 		D inteiro;         
 		C real;
-		fimse
 	varfim; 
  
 	escreva "Digite B";

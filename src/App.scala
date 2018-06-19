@@ -1,3 +1,4 @@
+import lexico.AnalisadorLexico
 import sintatico.AnalisadorSintatico
 
 /**
@@ -12,5 +13,11 @@ object App {
 
     //new AnalisadorSintatico(Console.readLine()).analisar()
     new AnalisadorSintatico("D:\\Universidade\\9_semestre\\Compiladores\\Projeto\\ufg-compiladores\\compilador\\src\\codigo_teste.mgol").analisar()
+    /*
+   val lexico = new AnalisadorLexico("D:\\Universidade\\9_semestre\\Compiladores\\Projeto\\ufg-compiladores\\compilador\\src\\codigo_teste.mgol")
+    while (!lexico.leituraFinalizada) {
+      println(lexico.proximoSimbolo())
+    }
+*/
   }
 }

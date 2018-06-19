@@ -1,6 +1,6 @@
 package sintatico
 
-class Producao(produtor: String, produzido: String, tamanho: Int) {
+class Regra(produtor: String, produzido: String, tamanho: Int) {
 
   def getTamanho: Int = tamanho
 

@@ -1,22 +1,28 @@
 package sintatico
 
-import lexico.TipoToken.TipoToken
+import lexico.TipoSimbolo.toTipoSimbolo
+import utilitario.MontadorTabela
 
-/*
- * Significados dos simbolos:
- *  D: Digito [0-9]
- *  E: Letra ou parte da notação cientifica de um número.
- *  L: Letra  [a-zA-Z]
- *  F: Whitespace. Ex.: \n \r \t ' ' e etc...
- *  EOF: Fim de arquivo
- *  Q: Qualquer caracter
- */
 object Automato {
 
-  val TRASICOES_TERMINAIS: Map[Int, Map[TipoToken, Acao]] = new MontadorTabela().montarTabelaTerminais()
-  val TRASICOES_NAO_TERMINAIS: Map[Int, Map[String, Int]] = new MontadorTabela().montarTabelaNaoTerminais()
+  val TRASICOES_TERMINAIS: Map[Int, Map[String, Acao]] = TabelaAutomato.terminais()
+  val TRASICOES_NAO_TERMINAIS: Map[Int, Map[String, Int]] = TabelaAutomato.naoTerminais()
 
-  def obterAcao(estado: Int, token: TipoToken): Acao = this.TRASICOES_TERMINAIS(estado)(token)
+  def obterAcao(estado: Int, tipoSimbolo: String): Acao = this.TRASICOES_TERMINAIS(estado)(tipoSimbolo)
 
-  def desviar(estado: Int, simbolo: String): Int = this.TRASICOES_NAO_TERMINAIS(estado)(simbolo)
+  def desviar(estado: Int, tipoSimbolo: String): Int = this.TRASICOES_NAO_TERMINAIS(estado)(tipoSimbolo)
+}
+
+object TabelaAutomato {
+
+  val CAMINHO_TABELA_NAO_TERMINAIS: String = "D:\\Universidade\\9_semestre\\Compiladores\\Projeto\\ufg-compiladores\\compilador\\src\\sintatico\\TABELA_NAO_TERMINAIS.csv"
+  val CAMINHO_TABELA_TERMINAIS: String = "D:\\Universidade\\9_semestre\\Compiladores\\Projeto\\ufg-compiladores\\compilador\\src\\sintatico\\TABELA_TERMINAIS.csv"
+
+  def naoTerminais(): Map[Int, Map[String, Int]] = {
+    new MontadorTabela(CAMINHO_TABELA_NAO_TERMINAIS).montarTabela[Int, String, Int](_.toInt, _.toString, _.toInt)
+  }
+
+  def terminais(): Map[Int, Map[String, Acao]] = {
+    new MontadorTabela(CAMINHO_TABELA_TERMINAIS).montarTabela[Int, String, Acao](_.toInt, toTipoSimbolo, new Acao(_))
+  }
 }

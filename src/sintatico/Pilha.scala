@@ -1,23 +1,23 @@
 package sintatico
 
-import lexico.Token
+import lexico.Simbolo
 
 import scala.collection.mutable
 
 class Pilha {
 
   var estados: mutable.Stack[Int] = new mutable.Stack[Int]()
-  var tokens: mutable.Stack[Token] = new mutable.Stack[Token]()
+  var simbolos: mutable.Stack[Simbolo] = new mutable.Stack[Simbolo]()
 
   this.estados.push(0)
 
-  def empilhar(token: Token, estado: Int): Unit = {
-    this.tokens.push(token)
+  def empilhar(simbolo: Simbolo, estado: Int): Unit = {
+    this.simbolos.push(simbolo)
     this.estados.push(estado)
   }
 
   def desempilhar(): Unit = {
-    this.tokens.pop()
+    this.simbolos.pop()
     this.estados.pop()
   }
 
@@ -25,5 +25,5 @@ class Pilha {
     this.estados.top
   }
 
-  override def toString: String = s"${this.tokens} ${this.estados}"
+  override def toString: String = s"${this.simbolos} ${this.estados}"
 }
