@@ -1,6 +1,6 @@
 package sintatico
 
-import lexico.Simbolo
+import comum.Simbolo
 
 import scala.collection.mutable
 
@@ -16,13 +16,17 @@ class Pilha {
     this.estados.push(estado)
   }
 
-  def desempilhar(): Unit = {
-    this.simbolos.pop()
+  def desempilhar(): Simbolo = {
     this.estados.pop()
+    this.simbolos.pop()
   }
 
   def estado(): Int = {
     this.estados.top
+  }
+
+  def simbolo(): Simbolo = {
+    this.simbolos.top
   }
 
   override def toString: String = s"${this.simbolos} ${this.estados}"

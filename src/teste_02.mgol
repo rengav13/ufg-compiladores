@@ -1,0 +1,7 @@
+inicio
+	varinicio
+		B inteiro;
+	varfim;
+
+	leia B;
+fim

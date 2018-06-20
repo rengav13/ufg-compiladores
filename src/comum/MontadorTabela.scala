@@ -1,4 +1,4 @@
-package utilitario
+package comum
 
 import scala.io.BufferedSource
 

@@ -1,30 +1,43 @@
 package lexico
 
+import comum.{PalavrasReservadas, TipoDado, TipoSimboloTerminal}
+
 object EstadosFinais {
   val ESTADOS_FINAIS: Map[Int, String] = Map(
-    1 -> TipoSimbolo.OPERADOR_ARITMETICO,
-    2 -> TipoSimbolo.NUMERO,
-    4 -> TipoSimbolo.NUMERO,
-    7 -> TipoSimbolo.NUMERO,
-    8 -> TipoSimbolo.OPERADOR_ARITMETICO,
-    9 -> TipoSimbolo.IDENTIFICADOR,
-    11 -> TipoSimbolo.CONSTANTE_LITERAL,
-    12 -> TipoSimbolo.CONSTANTE_LITERAL,
-    14 -> TipoSimbolo.COMENTARIO,
-    15 -> TipoSimbolo.COMENTARIO,
-    16 -> TipoSimbolo.FIM_ARQUIVO,
-    17 -> TipoSimbolo.OPERADOR_RELACIONAL,
-    18 -> TipoSimbolo.OPERADOR_RELACIONAL,
-    19 -> TipoSimbolo.OPERADOR_RELACIONAL,
-    20 -> TipoSimbolo.OPERADOR_RELACIONAL,
-    21 -> TipoSimbolo.ATRIBUICAO,
-    22 -> TipoSimbolo.ABRE_PARENTESES,
-    23 -> TipoSimbolo.FECHA_PARENTESES,
-    24 -> TipoSimbolo.PONTO_VIRGULA,
-    25 -> TipoSimbolo.WHITE_SPACE
+    1 -> TipoSimboloTerminal.OPERADOR_ARITMETICO,
+    2 -> TipoSimboloTerminal.NUMERO,
+    4 -> TipoSimboloTerminal.NUMERO,
+    7 -> TipoSimboloTerminal.NUMERO,
+    8 -> TipoSimboloTerminal.OPERADOR_ARITMETICO,
+    9 -> TipoSimboloTerminal.IDENTIFICADOR,
+    11 -> TipoSimboloTerminal.CONSTANTE_LITERAL,
+    12 -> TipoSimboloTerminal.CONSTANTE_LITERAL,
+    14 -> TipoSimboloTerminal.COMENTARIO,
+    15 -> TipoSimboloTerminal.COMENTARIO,
+    16 -> TipoSimboloTerminal.FIM_ARQUIVO,
+    17 -> TipoSimboloTerminal.OPERADOR_RELACIONAL,
+    18 -> TipoSimboloTerminal.OPERADOR_RELACIONAL,
+    19 -> TipoSimboloTerminal.OPERADOR_RELACIONAL,
+    20 -> TipoSimboloTerminal.OPERADOR_RELACIONAL,
+    21 -> TipoSimboloTerminal.ATRIBUICAO,
+    22 -> TipoSimboloTerminal.ABRE_PARENTESES,
+    23 -> TipoSimboloTerminal.FECHA_PARENTESES,
+    24 -> TipoSimboloTerminal.PONTO_VIRGULA,
+    25 -> TipoSimboloTerminal.WHITE_SPACE
   )
 
   def classificou(estado: Int): Boolean = this.ESTADOS_FINAIS.contains(estado)
 
   def getTipoSimbolo(estado: Int): String = this.ESTADOS_FINAIS(estado)
+
+  def isConstanteNumerica(estado: Int): Boolean = TipoSimboloTerminal.NUMERO.equals(this.ESTADOS_FINAIS(estado))
+
+  def getTipoConstanteNumerica(estado: Int): String = {
+    if (estado == 2)
+      TipoDado.INTEIRO
+    else if (estado == 4 || estado == 7)
+      TipoDado.REAL
+    else
+      null
+  }
 }

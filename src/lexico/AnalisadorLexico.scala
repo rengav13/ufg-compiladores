@@ -1,7 +1,7 @@
 package lexico
 
-import lexico.TipoSimbolo.{FIM_ARQUIVO, IDENTIFICADOR, WHITE_SPACE}
-import utilitario.Cursor
+import comum.TipoSimboloTerminal.{FIM_ARQUIVO, IDENTIFICADOR, NUMERO, WHITE_SPACE}
+import comum.{Simbolo, TabelaSimbolos, TipoSimboloTerminal}
 
 import scala.io.{BufferedSource, Source}
 
@@ -20,12 +20,12 @@ class AnalisadorLexico(fonte: String) {
       return new Simbolo(FIM_ARQUIVO, "EOF")
     }
 
-    val tipoSimbolo: String = ControladorAutomato.getTipoSimbolo
+    val (estado: Int, tipoSimbolo: String) = ControladorAutomato.getTipoSimbolo
     if (WHITE_SPACE.equals(tipoSimbolo)) {
       return proximoSimbolo()
     }
 
-    criarSimbolo(entrada, tipoSimbolo)
+    criarSimbolo(entrada, estado, tipoSimbolo)
   }
 
   def classificarSimbolo(entrada: Entrada): Unit = {
@@ -44,12 +44,17 @@ class AnalisadorLexico(fonte: String) {
     }
   }
 
-  def criarSimbolo(entrada: Entrada, tipoSimbolo: String): Simbolo = {
+  def criarSimbolo(entrada: Entrada, estado: Int, tipoSimbolo: String): Simbolo = {
     try {
       if (IDENTIFICADOR.equals(tipoSimbolo)) {
-        TabelaSimbolos.inserir(new Simbolo(tipoSimbolo, entrada.lexema))
+        val simbolo: Simbolo = new Simbolo(tipoSimbolo, entrada.lexema)
+        TabelaSimbolos.inserir(simbolo)
+        simbolo
+      } else if (NUMERO.equals(tipoSimbolo)) {
+        new Simbolo(tipoSimbolo, entrada.lexema, EstadosFinais.getTipoConstanteNumerica(estado))
+      } else {
+        new Simbolo(tipoSimbolo, entrada.lexema)
       }
-      new Simbolo(tipoSimbolo, entrada.lexema)
     } catch {
       case e: Exception => throw new Exception(s"Erro identificado na linha ${this.cursor.linha} e na coluna ${this.cursor.coluna} : ${e.getMessage}")
     }

@@ -10,16 +10,16 @@ inicio
 	leia B;     
 	escreva "Digite A:";     
 	leia A;     
-	se(B>2.234)
+	se(B>2)
 	entao         
-		se(B<=4E34)
+		se(B<=4)
 		entao             
 			escreva "B esta entre 2 e 4";         
 		fimse     
 	fimse 
  
-    B<-B+1e+123;
-	B<-B+2e-123;
+    B<-B+1;
+	B<-B+2;
 	B<-B+3;     
 	D<-B;    
 	C<-5.0; 

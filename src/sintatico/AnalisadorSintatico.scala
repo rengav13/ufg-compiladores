@@ -1,6 +1,8 @@
 package sintatico
 
-import lexico.{AnalisadorLexico, Simbolo}
+import comum.Simbolo
+import lexico.AnalisadorLexico
+import semantico.{ArquivoObjeto, ContadorVariaveisTemporarias, RegrasSemanticas}
 
 class AnalisadorSintatico(fonte: String) {
 
@@ -13,7 +15,7 @@ class AnalisadorSintatico(fonte: String) {
 
     var acao: Acao = null
     do {
-      acao = Automato.obterAcao(this.pilha.estado(), this.simbolo.tipo)
+      acao = Automato.obterAcao(this.pilha.estado(), this.simbolo.tipoSimbolo)
 
       acao match {
         case _ if acao.isEmpilhar => empilhar(acao.getValor)
@@ -30,19 +32,35 @@ class AnalisadorSintatico(fonte: String) {
     this.simbolo = this.lexico.proximoSimbolo()
   }
 
-  def reduzir(indiceProducao: Int): Unit = {
-    val producao: Regra = Gramatica.get(indiceProducao)
-    for (_ <- 1 to producao.getTamanho)
-      this.pilha.desempilhar()
+  def reduzir(indiceRegra: Int): Unit = {
+    val regra: Regra = RegrasSintaticas.get(indiceRegra)
 
-    var estado: Int = Automato.desviar(this.pilha.estado(), producao.getProdutor)
-    this.pilha.empilhar(new Simbolo(null, producao.getProdutor), estado)
+    var simbolos: List[Simbolo] = List()
+    for (_ <- 1 to regra.getTamanho)
+      simbolos = this.pilha.desempilhar() :: simbolos
 
-    println(producao)
+    var estado: Int = Automato.desviar(this.pilha.estado(), regra.getProdutor)
+    this.pilha.empilhar(new Simbolo(regra.getProdutor), estado)
+
+    //println(s"${indiceRegra.toString}) ${regra.toString}")
+
+    if (RegrasSemanticas.existe(indiceRegra))
+      RegrasSemanticas.executa(indiceRegra, List(this.pilha.simbolo()) ::: simbolos)
   }
 
   def aceitar(): Unit = {
-    print("Aceitou")
+    var header: String = ""
+    header += "#include<stdio.h>\n"
+    header += "typedef char literal[256];\n"
+    header += "void main(void) {\n"
+    header += "/*----Variaveis temporarias----*/\n"
+    for (index <- 1 to ContadorVariaveisTemporarias.contador) {
+      header += s"int T${index.toString};\n"
+    }
+    header += "/*-----------------------------*/\n"
+    ArquivoObjeto.imprimirInicio(header)
+    ArquivoObjeto.imprimir("}")
+    ArquivoObjeto.escrever()
   }
 
   def inicializar(fonte: String): Unit = {

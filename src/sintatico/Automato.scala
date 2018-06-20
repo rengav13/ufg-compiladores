@@ -1,7 +1,7 @@
 package sintatico
 
-import lexico.TipoSimbolo.toTipoSimbolo
-import utilitario.MontadorTabela
+import comum.TipoSimboloTerminal.toTipoSimbolo
+import comum.MontadorTabela
 
 object Automato {
 

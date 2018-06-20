@@ -15,10 +15,10 @@ object ControladorAutomato {
     }
   }
 
-  def getTipoSimbolo: String = {
+  def getTipoSimbolo: (Int, String) = {
     val estadoAnterior: Int = this.reiniciar()
     if (EstadosFinais.classificou(estadoAnterior))
-      EstadosFinais.getTipoSimbolo(estadoAnterior)
+      (estadoAnterior, EstadosFinais.getTipoSimbolo(estadoAnterior))
     else
       throw new Exception(ErrosPorEstado.pegarErro(estadoAnterior))
   }

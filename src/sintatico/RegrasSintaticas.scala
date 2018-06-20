@@ -1,6 +1,6 @@
 package sintatico
 
-object Gramatica {
+object RegrasSintaticas {
 
   val REGRAS: List[Regra] = List[Regra](
     new Regra("P'", "P", 1),
