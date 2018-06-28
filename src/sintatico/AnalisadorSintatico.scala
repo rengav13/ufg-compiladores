@@ -2,7 +2,7 @@ package sintatico
 
 import comum.Simbolo
 import lexico.AnalisadorLexico
-import semantico.{ArquivoObjeto, ContadorVariaveisTemporarias, RegrasSemanticas}
+import semantico.{ArquivoObjeto, ContadorVariaveisTemporarias, AnalisadorSemanticas}
 
 class AnalisadorSintatico(fonte: String) {
 
@@ -44,9 +44,9 @@ class AnalisadorSintatico(fonte: String) {
 
     //println(s"${indiceRegra.toString}) ${regra.toString}")
 
-    if (RegrasSemanticas.existe(indiceRegra)) {
+    if (AnalisadorSemanticas.existe(indiceRegra)) {
       try {
-        RegrasSemanticas.executa(indiceRegra, List(this.pilha.simbolo()) ::: simbolos)
+        AnalisadorSemanticas.executa(indiceRegra, List(this.pilha.simbolo()) ::: simbolos)
       } catch {
         case e: Exception => throw new Exception(s"${e.getMessage}: linha ${this.lexico.cursor.linha - 1} e coluna ${this.lexico.cursor.coluna}")
       }

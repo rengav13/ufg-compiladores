@@ -4,7 +4,7 @@ import comum.TipoArgumento.IDENTIFICADOR
 import comum.TipoDado.{INTEIRO, LITERAL, REAL, isEquivalente}
 import comum._
 
-object RegrasSemanticas {
+object AnalisadorSemanticas {
 
   val REGRAS_SEMANTICAS: Map[Int, (List[Simbolo] => Unit)] = Map(
     5 -> ((simbolos) => {
@@ -90,8 +90,6 @@ object RegrasSemanticas {
         throw new Exception("Erro: Variável não declarada.")
       }
     }),
-    // TODO: Está incompleto
-    // Em opm não pode ser tipoDado -> É necessário modificar o nome da variável para expressar um conceito mais conciso.
     18 -> (simbolos => {
       val LD: Simbolo = simbolos.head
       val OPRD1: Simbolo = simbolos(1)
