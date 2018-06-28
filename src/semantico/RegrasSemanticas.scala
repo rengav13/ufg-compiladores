@@ -1,7 +1,7 @@
 package semantico
 
 import comum.TipoArgumento.IDENTIFICADOR
-import comum.TipoDado.{LITERAL, isEquivalente}
+import comum.TipoDado.{INTEIRO, LITERAL, REAL, isEquivalente}
 import comum._
 
 object RegrasSemanticas {
@@ -37,9 +37,9 @@ object RegrasSemanticas {
 
       id.tipoDado match {
         case LITERAL => ArquivoObjeto.imprimir(s"""scanf("%s", ${id.lexema});""")
-        case TipoDado.INTEIRO => ArquivoObjeto.imprimir(s"""scanf("%d", &${id.lexema});""")
-        case TipoDado.REAL => ArquivoObjeto.imprimir(s"""scanf("%lf", &${id.lexema});""")
-        case _ => throw new Exception("Erro: Variável não declarada.")
+        case INTEIRO => ArquivoObjeto.imprimir(s"""scanf("%d", &${id.lexema});""")
+        case REAL => ArquivoObjeto.imprimir(s"""scanf("%lf", &${id.lexema});""")
+        case _ => throw new Exception(s"Erro: Variável não declarada.")
       }
     }),
     12 -> (simbolos => {
@@ -49,8 +49,8 @@ object RegrasSemanticas {
       if (IDENTIFICADOR.equals(ARG.tipoDado)) {
         ARG.atributo match {
           case LITERAL => ArquivoObjeto.imprimir(s"""printf("%s", ${ARG.lexema});""")
-          case TipoDado.INTEIRO => ArquivoObjeto.imprimir(s"""printf("%d", ${ARG.lexema});""")
-          case TipoDado.REAL => ArquivoObjeto.imprimir(s"""printf("%lf", ${ARG.lexema});""")
+          case INTEIRO => ArquivoObjeto.imprimir(s"""printf("%d", ${ARG.lexema});""")
+          case REAL => ArquivoObjeto.imprimir(s"""printf("%lf", ${ARG.lexema});""")
           case _ => throw new Exception("Erro: Variável não declarada.")
         }
       } else {

@@ -44,8 +44,13 @@ class AnalisadorSintatico(fonte: String) {
 
     //println(s"${indiceRegra.toString}) ${regra.toString}")
 
-    if (RegrasSemanticas.existe(indiceRegra))
-      RegrasSemanticas.executa(indiceRegra, List(this.pilha.simbolo()) ::: simbolos)
+    if (RegrasSemanticas.existe(indiceRegra)) {
+      try {
+        RegrasSemanticas.executa(indiceRegra, List(this.pilha.simbolo()) ::: simbolos)
+      } catch {
+        case e: Exception => throw new Exception(s"${e.getMessage}: linha ${this.lexico.cursor.linha - 1} e coluna ${this.lexico.cursor.coluna}")
+      }
+    }
   }
 
   def aceitar(): Unit = {
